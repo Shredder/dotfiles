@@ -18,16 +18,19 @@ set statusline+=%*
 set showbreak=->
 set background=dark
 " set clipboard=unnamedplus
-" set timeoutlen=200
+set timeoutlen=200
+set hidden " hid
+set relativenumber " rnu
+set number " nu
 
 call plug#begin()
 
 " Plug 'ervandew/supertab'
-" Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-sensible'
-" Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-rsi'
+" Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 " Plug 'tpope/vim-speeddating'
@@ -38,13 +41,13 @@ Plug 'Lokaltog/vim-easymotion'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'matchit.zip'
 " Plug 'thinca/vim-quickrun'
-" Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user'
 " Plug 'michaeljsmith/vim-indent-object'
 Plug 'justinmk/vim-sneak'
 " Plug 'terryma/vim-expand-region'
 " Plug 'PeterRincker/vim-argumentative'
-" Plug 'wellle/targets.vim'
-" Plug 'kien/ctrlp.vim'
+Plug 'wellle/targets.vim'
+Plug 'kien/ctrlp.vim'
 Plug 'svermeulen/vim-easyclip'
 Plug 'justinmk/vim-ipmotion'
 " Plug 'yegappan/mru'
@@ -55,20 +58,20 @@ Plug 'justinmk/vim-ipmotion'
 Plug 'bronson/vim-visual-star-search'
 Plug 'benmills/vimux'
 Plug 'jeetsukumaran/vim-indentwise'
-Plug 'vim-scripts/diffchar.vim'
+" Plug 'vim-scripts/diffchar.vim'
 Plug 'vim-scripts/occur.vim'
 
-" Plug 'rhysd/vim-operator-surround'
-" Plug 'kana/vim-operator-user'
-" Plug 'rhysd/vim-textobj-anyblock'
+Plug 'rhysd/vim-operator-surround'
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-textobj-anyblock'
 " Plug 'rhysd/vim-textobj-lastinserted'
-" Plug 'thinca/vim-textobj-between'
+Plug 'thinca/vim-textobj-between'
 " Plug 'Julian/vim-textobj-brace'
 " Plug 'glts/vim-textobj-comment'
 " Plug 'glts/vim-textobj-indblock'
 " Plug 'rhysd/vim-textobj-continuous-line'
 " Plug 'kana/vim-textobj-datetime'
-" Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-entire'
 " Plug 'kana/vim-textobj-indent'
 " Plug 'kana/vim-textobj-lastpat'
 " Plug 'kana/vim-textobj-line'
@@ -87,7 +90,7 @@ Plug 'vim-scripts/occur.vim'
 " " Plug 'honza/vim-snippets'
 " Plug 'rhysd/vim-operator-filled-with-blank'
 " Plug 'deris/vim-operator-insert'
-"
+
 call plug#end()
 
 " " ultisnips
@@ -171,9 +174,21 @@ let g:EasyMotion_smartcase = 1
 nmap <Leader>j <Plug>(easymotion-j)
 nmap <Leader>k <Plug>(easymotion-k)
 
-map <silent><Leader>a <Plug>(operator-surround-append)
-map <silent><Leader>d <Plug>(operator-surround-delete)
-map <silent><Leader>r <Plug>(operator-surround-replace)
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
+
+" if you use vim-textobj-multiblock
+" nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-multiblock-a)
+" nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-multiblock-a)
+
+" if you use vim-textobj-anyblock
+nmap <silent>sdd <Plug>(operator-surround-delete)<Plug>(textobj-anyblock-a)
+nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-anyblock-a)
+
+" if you use vim-textobj-between
+nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
+nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 " Replace 'f' with 1-char Sneak
 nmap f <Plug>Sneak_f
@@ -204,3 +219,19 @@ map <Leader>bb :call VimuxRunCommand("clear; " . bufname("%"))<CR>
 map <Leader>bq :call VimuxRunCommand("clear; " . bufname("%"), 0)<CR>
 
 nnoremap <silent> <unique> <Leader># :let ws=&wrapscan<CR>:set wrapscan<CR>*<C-o>:Moccur<CR>:let &g:wrapscan=ws<CR>
+
+inoremap jk <Esc>
+inoremap kj <Esc>
+inoremap jl <Esc>l
+inoremap lj <Esc>l
+inoremap <Esc> <nop>
+vnoremap jk <Esc>
+vnoremap kj <Esc>
+vnoremap jl <Esc>l
+vnoremap lj <Esc>l
+vnoremap <Esc> <nop>
+
+augroup myvimrc
+    au!
+    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+augroup END
