@@ -24,10 +24,14 @@ bindkey -M isearch " " magic-space # normal space during searches
 
 alias grep='grep --color=auto'
 
+alias -g P='| '
 alias -g L='| less'
-alias -g G='| egrep'
-alias -g GI='| egrep -i'
+alias -g G='| grep'
+alias -g GI='| grep -i'
+alias -g EG='| egrep'
+alias -g EGI='| egrep -i'
 alias -g X='| xargs'
+alias -g XG='| xargs grep'
 alias -g XE='| xargs egrep'
 alias -g WL='| wc -l'
 alias -g PI="perl -pi -e 's|||'"

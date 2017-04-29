@@ -53,7 +53,7 @@ Plug 'justinmk/vim-ipmotion'
 " Plug 'yegappan/mru'
 " Plug 'majutsushi/tagbar'
 " Plug 'scrooloose/syntastic'
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " " Plug 'klen/python-mode'
 Plug 'bronson/vim-visual-star-search'
 Plug 'benmills/vimux'
@@ -64,19 +64,20 @@ Plug 'vim-scripts/occur.vim'
 Plug 'rhysd/vim-operator-surround'
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-textobj-anyblock'
-" Plug 'rhysd/vim-textobj-lastinserted'
+Plug 'rhysd/vim-textobj-lastinserted'
 Plug 'thinca/vim-textobj-between'
 " Plug 'Julian/vim-textobj-brace'
-" Plug 'glts/vim-textobj-comment'
-" Plug 'glts/vim-textobj-indblock'
+Plug 'glts/vim-textobj-comment'
+Plug 'glts/vim-textobj-indblock'
 " Plug 'rhysd/vim-textobj-continuous-line'
 " Plug 'kana/vim-textobj-datetime'
 Plug 'kana/vim-textobj-entire'
-" Plug 'kana/vim-textobj-indent'
-" Plug 'kana/vim-textobj-lastpat'
-" Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-lastpat'
+Plug 'kana/vim-textobj-line'
 " Plug 'kana/vim-textobj-function'
-" Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-syntax'
+Plug 'saaguero/vim-textobj-pastedtext'
 " Plug 'osyo-manga/vim-textobj-multiblock'
 " Plug 'sgur/vim-textobj-parameter'
 " Plug 'beloglazov/vim-textobj-punctuation'
@@ -84,12 +85,23 @@ Plug 'kana/vim-textobj-entire'
 " Plug 'Julian/vim-textobj-variable-segment'
 " Plug 'whatyouhide/vim-textobj-xmlattr'
 " Plug 'paulhybryant/vim-textobj-path'
-" Plug 'saihoooooooo/vim-textobj-space'
+Plug 'saihoooooooo/vim-textobj-space'
 " Plug 'bps/vim-textobj-python'
-" " Plug 'SirVer/ultisnips'
-" " Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+Plug 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
 " Plug 'rhysd/vim-operator-filled-with-blank'
-" Plug 'deris/vim-operator-insert'
+Plug 'deris/vim-operator-insert'
+" Plug 'amoffat/snake'
+Plug 'AndrewRadev/switch.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'jlanzarotta/bufexplorer'
+
+Plug 'xuhdev/SingleCompile'
+Plug 'tmux-plugins/vim-tmux'
 
 call plug#end()
 
@@ -190,6 +202,14 @@ nmap <silent>srr <Plug>(operator-surround-replace)<Plug>(textobj-anyblock-a)
 nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
 nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
+" Remap 's' to 2-char Sneak
+nmap s <Plug>Sneak_s
+nmap S <Plug>Sneak_S
+xmap s <Plug>Sneak_s
+xmap S <Plug>Sneak_S
+omap s <Plug>Sneak_s
+omap S <Plug>Sneak_S
+
 " Replace 'f' with 1-char Sneak
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
@@ -207,8 +227,8 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 map <silent><Leader>b <Plug>(operator-filled-with-blank)
-nmap <Leader>i <Plug>(operator-insert-i)
-nmap <Leader>a <Plug>(operator-insert-a)
+nnoremap <Leader>i <Plug>(operator-insert-i)
+nnoremap <Leader>a <Plug>(operator-insert-a)
 
 let g:EasyClipAlwaysMoveCursorToEndOfPaste = 1
 
@@ -218,7 +238,7 @@ nnoremap <Bslash> m
 map <Leader>bb :call VimuxRunCommand("clear; " . bufname("%"))<CR>
 map <Leader>bq :call VimuxRunCommand("clear; " . bufname("%"), 0)<CR>
 
-nnoremap <silent> <unique> <Leader># :let ws=&wrapscan<CR>:set wrapscan<CR>*<C-o>:Moccur<CR>:let &g:wrapscan=ws<CR>
+" nnoremap <silent> <unique> <Leader># :let ws=&wrapscan<CR>:set wrapscan<CR>*<C-o>:Moccur<CR>:let &g:wrapscan=ws<CR>
 
 inoremap jk <Esc>
 inoremap kj <Esc>
@@ -235,3 +255,38 @@ augroup myvimrc
     au!
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
+
+let g:netrw_liststyle = 3
+
+" let g:switch_mapping = "-"
+let g:switch_custom_definitions =
+    \ [
+    \   {
+    \       '\<and\>': 'or',
+    \       '\<or\>': 'and',
+    \       '>': '<',
+    \       '<': '>',
+    \       '>=': '<=',
+    \       '<=': '>=',
+    \       '&': '|',
+    \       '|': '&',
+    \   },
+    \ ]
+
+let g:variable_style_switch_definitions = [
+      \   {
+      \     '\<[a-z0-9]\+_\k\+\>': {
+      \       '_\(.\)': '\U\1'
+      \     },
+      \     '\<[a-z0-9]\+[A-Z]\k\+\>': {
+      \       '\([A-Z]\)': '_\l\1'
+      \     },
+      \   }
+      \ ]
+
+nnoremap + :call switch#Switch(g:variable_style_switch_definitions)<cr>
+nnoremap - :Switch<cr>
+
+let g:session_autosave = 0
+let g:session_autoload = 0
+let g:session_command_aliases = 1
