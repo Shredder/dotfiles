@@ -72,6 +72,8 @@ bindkey -s '\eP' '^Upopd >/dev/null; dirs -v^M'
 # Pipe the current command through less
 bindkey -s "\em" " 2>&1|less^M"
 
+alias ls='ls --color=auto --classify --group-directories-first'
+
 # Meta-c: ls -lart
 bindkey -s '\ec' 'ls -lart^M'
 
@@ -243,7 +245,8 @@ function _history-incremental-preserving-pattern-search-backward {
 zle -N _history-incremental-preserving-pattern-search-backward
 bindkey "^R" _history-incremental-preserving-pattern-search-backward
 bindkey -M isearch "^R" _history-incremental-preserving-pattern-search-backward
-bindkey "^S" history-incremental-pattern-search-forward
+bindkey "^S" history-incremental-preserving-pattern-search-forward
+bindkey "^S" history-incremental-preserving-pattern-search-forward
 
 # M-= deletes whole path
 _backward_kill_default_word() {
